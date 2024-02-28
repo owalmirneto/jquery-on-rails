@@ -1,2 +1,7 @@
 <h1 class="page-title">Home#page</h1>
-<p>Find me in app/views/home/page.html.erb</p>
+
+<%= form_tag nil, method: "GET" do %>
+  <%= text_field_tag :zip_code, nil, placeholder: "Digite seu CEP" %>
+
+  <%= submit_tag "Buscar endereço" %>
+<% end %>
