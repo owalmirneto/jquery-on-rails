@@ -1,3 +1,3 @@
 jQuery(document).ready(function ($) {
-  // Our code goes here =P
+  $("h1.page-title").text("Qual é o meu endereço?");
 });
