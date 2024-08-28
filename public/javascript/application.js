@@ -8,27 +8,31 @@ jQuery(document).ready(function ($) {
     const zipCode = $(this).find("#zip_code").val()
 
     if (!zipCode) return
+
     $("#loading").show();
     $("#response").text("");
 
-    $.get(`https://viacep.com.br/ws/${zipCode}/json`)
+    $.get(`/addresses/${zipCode}`)
       .done(function (response) {
-        if (response.erro === "true") {
-          return $("#response").html("Endereço não encontrado!");
+        console.log(response.failure);
+
+        if (response.failure) {
+          return $("#response").html("<span style='color:red'>Endereço não encontrado!</span>");
         }
 
         const html = $(
           `<div>` +
-            `<p>Logradouro: <b>${response.logradouro}</b></p>` +
-            `<p>Bairro: <b>${response.bairro}</b></p>` +
-            `<p>Localidade: <b>${response.localidade}-${response.uf}</b></p>` +
+            `<h3>JSON version</h3>` +
+            `<p>Logradouro: <b>${response.streetName}</b></p>` +
+            `<p>Bairro: <b>${response.district}</b></p>` +
+            `<p>Localidade: <b>${response.city}-${response.state}</b></p>` +
           `</div>`
         );
 
         $("#response").html(html);
       })
       .fail(function () {
-        $("#response").text("Endereço não encontrado!");
+        $("#response").text("<span style='color:red'>Endereço não encontrado!</span>");
       })
       .always(function () {
         $("#loading").hide();

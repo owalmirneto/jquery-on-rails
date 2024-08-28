@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#page"
+
+  get "/addresses/:zip_code", to: "addresses#show"
 end
