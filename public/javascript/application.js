@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
   $("#loading").hide();
-  $("h1.page-title").text("Qual é o meu endereço?");
+  $("h2.page-title").text("Qual é o meu endereço?");
   $("[name=zip_code]").mask("00000-000");
 
   $("form").on("submit", function (event) {
