@@ -1,6 +1,7 @@
 <h1 class="page-title">Home#page</h1>
 
 <%= form_tag nil, method: "GET" do %>
+  <%= select_tag :format, options_for_select(["html", "json"], "html") %>
   <%= text_field_tag :zip_code, nil, placeholder: "Digite seu CEP" %>
 
   <%= submit_tag "Buscar endereço" %>

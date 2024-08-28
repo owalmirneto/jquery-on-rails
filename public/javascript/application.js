@@ -5,6 +5,8 @@ jQuery(document).ready(function ($) {
 
   $("form").on("submit", function (event) {
     event.preventDefault()
+    const responseFormatter = $(this).find("#format").val()
+
     const zipCode = $(this).find("#zip_code").val()
 
     if (!zipCode) return
@@ -12,24 +14,26 @@ jQuery(document).ready(function ($) {
     $("#loading").show();
     $("#response").text("");
 
-    $.get(`/addresses/${zipCode}`)
+    $.get(`/addresses/${zipCode}.${responseFormatter}`)
       .done(function (response) {
-        console.log(response.failure);
+        if (responseFormatter == "html") {
+          $("#response").html(response);
+        } else {
+          if (response.failure) {
+            return $("#response").html("<span style='color:red'>Endereço não encontrado!</span>");
+          }
 
-        if (response.failure) {
-          return $("#response").html("<span style='color:red'>Endereço não encontrado!</span>");
+          const html = $(
+            `<div>` +
+              `<h3>JSON version</h3>` +
+              `<p>Logradouro: <b>${response.streetName}</b></p>` +
+              `<p>Bairro: <b>${response.district}</b></p>` +
+              `<p>Localidade: <b>${response.city}-${response.state}</b></p>` +
+            `</div>`
+          );
+
+          $("#response").html(html);
         }
-
-        const html = $(
-          `<div>` +
-            `<h3>JSON version</h3>` +
-            `<p>Logradouro: <b>${response.streetName}</b></p>` +
-            `<p>Bairro: <b>${response.district}</b></p>` +
-            `<p>Localidade: <b>${response.city}-${response.state}</b></p>` +
-          `</div>`
-        );
-
-        $("#response").html(html);
       })
       .fail(function () {
         $("#response").text("<span style='color:red'>Endereço não encontrado!</span>");

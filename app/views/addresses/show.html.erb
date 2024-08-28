@@ -1,0 +1,10 @@
+<% if @address[:failure] %>
+  <span style="color:red">Endereço não encontrado!</span>
+<% else %>
+  <div>
+    <h3>HTML version</h3>
+    <p>Logradouro: <b><%= @address[:streetName] %></b></p>
+    <p>Bairro: <b><%= @address[:district] %></b></p>
+    <p>Localidade: <b><%= @address[:city] %>-<%= @address[:state] %></b></p>
+  </div>
+<% end %>
